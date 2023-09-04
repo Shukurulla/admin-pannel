@@ -14,4 +14,9 @@ export const sideNavigations = [
     label: "Create Courses",
     icon: "fa-square-plus",
   },
+  {
+    path: "/students",
+    label: "Students",
+    icon: "fa-graduation-cap",
+  },
 ];
