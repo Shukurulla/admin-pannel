@@ -1,27 +1,25 @@
-import { useEffect } from "react";
 import "./App.css";
-import Navbar from "./components/navbar";
-import SideBar from "./components/side-bar";
+import { SideBar, Navbar } from "./components";
+import { Routes, Route } from "react-router-dom";
+import CreateCourse from "./pages/create-course";
+import Courses from "./pages/courses";
 
 function App() {
-  useEffect(() => {
-    fetch("http://localhost:3001/add-user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: "adas",
-        phone: "090798213",
-        course: "android",
-      }),
-    });
-  });
   return (
     <>
       <div className="d-flex">
-        <SideBar />
-        <Navbar />
+        <div>
+          <SideBar />
+        </div>
+        <div className="w-100">
+          <Navbar />
+          <div className="scroll-bar">
+            <Routes>
+              <Route path="/courses-add" element={<CreateCourse />} />
+              <Route path="/courses" element={<Courses />} />
+            </Routes>
+          </div>
+        </div>
       </div>
     </>
   );
