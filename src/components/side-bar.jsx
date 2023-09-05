@@ -1,13 +1,10 @@
 import { Link } from "react-router-dom";
 import { sideNavigations } from "../constants";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { Context } from "../context";
 const SideBar = () => {
   const [showSide, setShowSide] = useState(false);
-  const [selectMenu, setSelectMenu] = useState("Dasboard");
-
-  const updateSselectMenu = (name) => {
-    setSelectMenu(name);
-  };
+  const { selectItem } = useContext(Context);
 
   return (
     <div
@@ -24,13 +21,12 @@ const SideBar = () => {
           <i className="bi bi-list" onClick={() => setShowSide(!showSide)}></i>
         </div>
         <ul className="menu">
-          {sideNavigations.map((item) => {
+          {sideNavigations.map((item, idx) => {
             return (
               <li
                 className={`d-flex gap-2 align-items-center ${
-                  selectMenu == item.label && "selected"
+                  selectItem == idx && "selected"
                 }`}
-                onClick={() => updateSselectMenu(item.label)}
                 key={item.label}
               >
                 <Link to={item.path}>

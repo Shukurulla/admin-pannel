@@ -1,6 +1,7 @@
 import { Input } from "../ui";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../context";
 
 const CreateCourse = () => {
   const [courseName, setCourseName] = useState("");
@@ -14,6 +15,12 @@ const CreateCourse = () => {
 
   const navigate = useNavigate();
 
+  const { setSelectItem } = useContext(Context);
+
+  useEffect(() => {
+    setSelectItem(2);
+  }, []);
+
   const formSubmit = (e) => {
     e.preventDefault();
     const slug = courseName.replace(" ", "").toLocaleLowerCase();
@@ -25,6 +32,7 @@ const CreateCourse = () => {
       info,
       duration,
       price,
+      tech,
       courseImage: image,
       slug,
     };
@@ -43,7 +51,6 @@ const CreateCourse = () => {
       .then((data) => {
         navigate("/");
         console.log(data);
-        
       })
       .catch((err) => {
         console.log(err);
@@ -52,80 +59,83 @@ const CreateCourse = () => {
   };
 
   return (
-    <div className="p-3">
-      <form onSubmit={(e) => formSubmit(e)}>
-        <div className="row">
-          <div className="col-lg-6 col-md-6 col-sm-12">
-            <Input
-              label={"Course Name"}
-              name={"name"}
-              state={courseName}
-              setState={setCourseName}
-            />
+    <div className="container">
+      <div className="p-3">
+        <form onSubmit={(e) => formSubmit(e)}>
+          <div className="row">
+            <div className="col-lg-6 col-md-6 col-sm-12">
+              <Input
+                label={"Course Name"}
+                name={"name"}
+                state={courseName}
+                setState={setCourseName}
+              />
+            </div>
+            <div className="col-lg-6 col-md-6 col-sm-12">
+              <Input
+                label={"Mentor  Name"}
+                name={"mentor"}
+                state={mentor}
+                setState={setMentor}
+              />
+            </div>
           </div>
-          <div className="col-lg-6 col-md-6 col-sm-12">
-            <Input
-              label={"Mentor  Name"}
-              name={"mentor"}
-              state={mentor}
-              setState={setMentor}
-            />
+          <div className="row my-3">
+            <div className="col-lg-6 col-md-6 col-sm-12">
+              <select
+                value={duration}
+                onChange={(e) => setDuration(e.target.value)}
+                className="form-select"
+              >
+                <option value="2oy-3oy">2oy-3oy</option>
+                <option value="3oy-6oy">3oy-6oy</option>
+                <option value="4oy">4oy</option>
+                <option value="6oy-9oy">6oy-9oy</option>
+              </select>
+            </div>
+            <div className="col-lg-6 col-md-6 col-sm-12">
+              <select
+                className="form-select"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              >
+                <option value="200 000sum">200 000sum</option>
+                <option value="220 000sum">220 000sum</option>
+                <option value="250 000sum">250 000sum</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div className="row my-3">
-          <div className="col-lg-6 col-md-6 col-sm-12">
-            <select
-              value={duration}
-              onChange={(e) => setDuration(e.target.value)}
-              className="form-select"
-            >
-              <option value="2oy-3oy">2oy-3oy</option>
-              <option value="3oy-6oy">3oy-6oy</option>
-              <option value="4oy">4oy</option>
-              <option value="6oy-9oy">6oy-9oy</option>
-            </select>
-          </div>
-          <div className="col-lg-6 col-md-6 col-sm-12">
-            <select
-              className="form-select"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-            >
-              <option value="200 000sum">200 000sum</option>
-              <option value="220 000sum">220 000sum</option>
-              <option value="250 000sum">250 000sum</option>
-            </select>
-          </div>
-        </div>
-        <Input
-          label={"Otiladigan texnologiyalar"}
-          state={tech}
-          setState={setTech}
-        />
-        <Input
-          label={"Kurs rasmi"}
-          state={image}
-          setState={setImage}
-          type={"url"}
-        />
-        <textarea
-          name="brief-info"
-          className="form-control mt-3"
-          placeholder="Kusr haqida qisqacha"
-          style={{ height: "150px" }}
-          value={briefInfo}
-          onChange={(e) => setBriefInfo(e.target.value)}
-        ></textarea>
-        <textarea
-          name="info"
-          className="form-control my-3"
-          placeholder="Kusr haqida toliq"
-          style={{ height: "200px" }}
-          value={info}
-          onChange={(e) => setInfo(e.target.value)}
-        ></textarea>
-        <button className="btn btn-primary">Kurs Qoshish</button>
-      </form>
+          <Input
+            label={"Otiladigan texnologiyalar"}
+            state={tech}
+            setState={setTech}
+          />
+          <br />
+          <Input
+            label={"Kurs rasmi"}
+            state={image}
+            setState={setImage}
+            type={"url"}
+          />
+          <textarea
+            name="brief-info"
+            className="form-control mt-3"
+            placeholder="Kusr haqida qisqacha"
+            style={{ height: "150px" }}
+            value={briefInfo}
+            onChange={(e) => setBriefInfo(e.target.value)}
+          ></textarea>
+          <textarea
+            name="info"
+            className="form-control my-3"
+            placeholder="Kusr haqida toliq"
+            style={{ height: "200px" }}
+            value={info}
+            onChange={(e) => setInfo(e.target.value)}
+          ></textarea>
+          <button className="btn btn-primary">Kurs Qoshish</button>
+        </form>
+      </div>
     </div>
   );
 };

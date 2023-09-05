@@ -1,4 +1,5 @@
-const CourseCard = ({ image, brief_info, name }) => {
+import { Link } from "react-router-dom";
+const CourseCard = ({ image, brief_info, name, id }) => {
   return (
     <div className="card shadow-sm text-center">
       <div className="card-image">
@@ -11,14 +12,19 @@ const CourseCard = ({ image, brief_info, name }) => {
         <p className="card-text">{brief_info}</p>
         <div className="d-flex justify-content-between align-items-center">
           <div className="btn-group">
-            <button type="button" className="btn btn-sm btn-outline-secondary">
-              View
-            </button>
+            <Link to={`/course/${id}`}>
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-secondary"
+              >
+                View
+              </button>
+            </Link>
             <button type="button" className="btn btn-sm btn-outline-secondary">
               Edit
             </button>
           </div>
-          <small className="text-body-secondary">9 mins</small>
+          <button className="btn btn-outline-danger">Delete</button>
         </div>
       </div>
     </div>
