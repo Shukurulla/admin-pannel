@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const CourseEdit = () => {
   const { id } = useParams();
 
-  const courses = JSON.parse(localStorage.getItem("courses"));
+  const { courses } = useContext(Context);
   const course = courses.filter((c) => c._id == id);
   const [courseName, setCourseName] = useState(course[0].name);
   const [mentor, setMentor] = useState(course[0].mentor);
@@ -119,7 +119,7 @@ const CourseEdit = () => {
             value={info}
             onChange={(e) => setInfo(e.target.value)}
           ></textarea>
-          <button className="btn btn-primary">Kurs Qoshish</button>
+          <button className="btn btn-primary">Kursni o'zgartirish</button>
         </form>
       </div>
     </div>

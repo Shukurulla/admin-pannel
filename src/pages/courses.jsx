@@ -3,7 +3,7 @@ import { CourseCard } from "../components";
 import { Context } from "../context";
 const Courses = () => {
   const { courses, setCourses, setSelectItem } = useContext(Context);
-  
+
   useEffect(() => {
     setSelectItem(1);
     fetch("http://localhost:3001/courses")
@@ -12,6 +12,7 @@ const Courses = () => {
         setCourses(data);
       });
     console.log(courses);
+
   }, []);
   return (
     <div className="p-3">

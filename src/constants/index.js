@@ -19,4 +19,9 @@ export const sideNavigations = [
     label: "Students",
     icon: "fa-graduation-cap",
   },
+  {
+    path: "/mentors",
+    label: "Mentors",
+    icon: "fa-graduation-cap",
+  },
 ];

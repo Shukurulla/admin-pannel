@@ -102,6 +102,9 @@ const CreateCourse = () => {
                 <option value="200 000sum">200 000sum</option>
                 <option value="220 000sum">220 000sum</option>
                 <option value="250 000sum">250 000sum</option>
+                <option value="300 000sum">300 000sum</option>
+                <option value="350 000sum">350 000sum</option>
+                <option value="400 000sum">400 000sum</option>
               </select>
             </div>
           </div>

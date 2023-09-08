@@ -6,6 +6,7 @@ import { CreateCourse, Course, Courses } from "./pages";
 import { Context } from "./context";
 import CourseEdit from "./pages/course-edit";
 import Students from "./components/students";
+import Main from "./pages/main";
 
 function App() {
   const [courses, setCourses] = useState(null);
@@ -43,6 +44,7 @@ function App() {
             <Navbar />
             <div className="scroll-bar">
               <Routes>
+                <Route path="/" element={<Main />} />
                 <Route path="/courses-add" element={<CreateCourse />} />
                 <Route path="/courses" element={<Courses />} />
                 <Route path="/course/:id" element={<Course />} />
