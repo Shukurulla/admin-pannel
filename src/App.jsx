@@ -4,6 +4,8 @@ import { SideBar, Navbar } from "./components";
 import { Routes, Route } from "react-router-dom";
 import { CreateCourse, Course, Courses } from "./pages";
 import { Context } from "./context";
+import CourseEdit from "./pages/course-edit";
+import Students from "./components/students";
 
 function App() {
   const [courses, setCourses] = useState(null);
@@ -23,8 +25,11 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         setCourses(data);
+        localStorage.setItem("courses", JSON.stringify(data));
       });
-    console.log(courses);
+    fetch("http://localhost:3001/users")
+      .then((res) => res.json())
+      .then((data) => localStorage.setItem("users", JSON.stringify(data)));
   }, []);
 
   return (
@@ -41,6 +46,8 @@ function App() {
                 <Route path="/courses-add" element={<CreateCourse />} />
                 <Route path="/courses" element={<Courses />} />
                 <Route path="/course/:id" element={<Course />} />
+                <Route path="/edit-course/:id" element={<CourseEdit />} />
+                <Route path="/students" element={<Students />} />
               </Routes>
             </div>
           </div>
