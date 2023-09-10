@@ -2,9 +2,8 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { SideBar, Navbar } from "./components";
 import { Routes, Route } from "react-router-dom";
-import { CreateCourse, Course, Courses } from "./pages";
+import { CreateCourse, Course, Courses,CourseEdit,AddMentor } from "./pages";
 import { Context } from "./context";
-import CourseEdit from "./pages/course-edit";
 import Students from "./components/students";
 import Main from "./pages/main";
 
@@ -50,6 +49,7 @@ function App() {
                 <Route path="/course/:id" element={<Course />} />
                 <Route path="/edit-course/:id" element={<CourseEdit />} />
                 <Route path="/students" element={<Students />} />
+                <Route path="/add-mentor" element={<AddMentor />} />
               </Routes>
             </div>
           </div>
