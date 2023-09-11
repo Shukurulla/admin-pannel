@@ -3,8 +3,13 @@ import { sideNavigations } from "../constants";
 import { useState, useContext } from "react";
 import { Context } from "../context";
 const SideBar = () => {
-  const [showSide, setShowSide] = useState(false);
+  const [showSide, setShowSide] = useState(true);
   const { selectItem } = useContext(Context);
+
+  const logOut = async () => {
+    await localStorage.removeItem("user");
+    window.location.reload();
+  };
 
   return (
     <div
@@ -39,7 +44,7 @@ const SideBar = () => {
         </ul>
       </div>
       <div className="side-footer">
-        <p>
+        <p onClick={() => logOut()}>
           <i className="bi bi-box-arrow-right"></i>
           {showSide ? <span>Logout</span> : ""}
         </p>

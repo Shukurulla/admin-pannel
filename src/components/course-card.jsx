@@ -3,8 +3,7 @@ import { useContext } from "react";
 import { Context } from "../context";
 
 const CourseCard = ({ image, brief_info, name, id }) => {
-  const { setCourses } = useContext(Context);
-
+  const { setCourses, courses } = useContext(Context);
   const onDelete = () => {
     fetch(`http://localhost:3001/delete-course/${id}`, {
       method: "POST",
@@ -18,6 +17,7 @@ const CourseCard = ({ image, brief_info, name, id }) => {
         setCourses(data);
       });
   };
+
   return (
     <div className="card shadow-sm text-center h-100">
       <div className="card-image">

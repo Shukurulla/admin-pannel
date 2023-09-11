@@ -11,6 +11,11 @@ body {
   left: 0;
 }
 
+body a {
+  text-decoration: none;
+  color: #333;
+}
+
 .side-bar {
   color: #fff;
   background-color: rgba(25, 10, 53, 0.891);
@@ -21,6 +26,12 @@ body {
   flex-direction: column;
   padding: 0;
   width: 300px;
+}
+.auth-box {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .side-bar.show {
@@ -127,7 +138,6 @@ body {
 
 .user-table {
   width: 100%;
-
 }
 
 .user-table th,
@@ -143,4 +153,7 @@ td {
 .card-image img {
   width: 100%;
   height: 100%;
+}
+.info-box {
+  cursor: pointer;
 }

@@ -1,32 +1,38 @@
 import React, { useContext, useEffect, useState } from "react";
-import male from "../../public/male.jpg";
-import female from "../../public/female.jpg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../context";
 
-const AddMentor = () => {
-  const { setSelectItem } = useContext(Context);
-  useEffect(() => {
-    setSelectItem(4);
-  }, []);
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [course, setCourse] = useState("");
-  const [telegramUrl, setTelegramUrl] = useState();
-  const [instagramUrl, setInstagramUrl] = useState();
-  const [image, setImage] = useState("");
-  const [gender, setGender] = useState("erkak");
-
-  const navigate = useNavigate();
+const EditMentor = () => {
+  const { id } = useParams();
+  const mentors = JSON.parse(localStorage.getItem("mentors"));
+  const mentor = mentors.filter((c) => c._id === id);
+  console.log(mentor);
+  const [name, setName] = useState(mentor[0].name);
+  const [phone, setPhone] = useState(mentor[0].phoneNumber);
+  const [course, setCourse] = useState(mentor[0].course);
+  const [telegramUrl, setTelegramUrl] = useState(mentor[0].telegramUrl);
+  const [instagramUrl, setInstagramUrl] = useState(mentor[0].instagramUrl);
+  const [gender, setGender] = useState(mentor[0].gender);
 
   const male =
     "https://img.freepik.com/premium-psd/3d-render-cartoon-avatar-isolated_570939-66.jpg";
   const female =
     "https://img.freepik.com/premium-psd/3d-render-cartoon-avatar-isolated_570939-48.jpg?w=1800";
 
+  const { setMentors, setSelectItem } = useContext(Context);
+  const navigate = useNavigate("");
+  useEffect(() => {
+    setSelectItem(5);
+    fetch("http://localhost:3001/mentors")
+      .then((res) => res.json())
+      .then((data) => {
+        setMentors(data), localStorage.setItem("mentors", JSON.stringify(data));
+      });
+  }, []);
+
   const formData = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3001/add-mentor", {
+    fetch(`http://localhost:3001/edit-mentor/${id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -38,7 +44,6 @@ const AddMentor = () => {
         telegramUrl,
         instagramUrl,
         course,
-        gender,
       }),
     });
     navigate("/mentors");
@@ -46,7 +51,7 @@ const AddMentor = () => {
 
   return (
     <div className="container">
-      <h2 className="text-center">Add Mentor</h2>
+      <h2 className="text-center">Edit Mentor</h2>
       <form onSubmit={(e) => formData(e)}>
         <div className="row">
           <div className="col-lg-6 col-md-6 col-sm-12">
@@ -97,8 +102,8 @@ const AddMentor = () => {
           <div className="col-lg-6 col-md-6 col-sm-12">
             <select
               className="form-control"
-              value={image}
-              onChange={(e) => setGender(e.target.value)}
+              value={gender}
+              onChange={(e) => (setGender(e.target.value), console.log(gender))}
             >
               <option value="erkak">Erkak</option>
               <option value="ayol">Ayol</option>
@@ -106,7 +111,7 @@ const AddMentor = () => {
           </div>
           <div>
             <button className="btn btn-primary" type="submit">
-              Add Mentor
+              Edit Mentor
             </button>
           </div>
         </div>
@@ -115,4 +120,4 @@ const AddMentor = () => {
   );
 };
 
-export default AddMentor;
+export default EditMentor;
