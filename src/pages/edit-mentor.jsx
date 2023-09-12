@@ -25,7 +25,7 @@ const EditMentor = () => {
     setSelectItem(5);
     fetch("http://localhost:3001/mentors")
       .then((res) => res.json())
-      .then((data) => {
+      .then(({data}) => {
         setMentors(data), localStorage.setItem("mentors", JSON.stringify(data));
       });
   }, []);

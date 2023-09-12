@@ -8,7 +8,7 @@ const Courses = () => {
     setSelectItem(1);
     fetch("http://localhost:3001/courses")
       .then((res) => res.json())
-      .then((data) => {
+      .then(({data}) => {
         setCourses(data);
       });
     console.log(courses);
@@ -18,7 +18,7 @@ const Courses = () => {
     <div className="p-3">
       <div className="container">
         <div className="row ">
-          {courses?.map((item) => (
+          {courses.map((item) => (
             <div className="col-lg-4 col-md-4 mt-3 col-sm-6" key={item.name}>
               <CourseCard
                 name={item.name}

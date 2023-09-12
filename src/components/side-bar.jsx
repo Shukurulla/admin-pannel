@@ -7,7 +7,7 @@ const SideBar = () => {
   const { selectItem } = useContext(Context);
 
   const logOut = async () => {
-    await localStorage.removeItem("user");
+     localStorage.removeItem("user");
     window.location.reload();
   };
 

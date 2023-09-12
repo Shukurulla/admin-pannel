@@ -1,14 +1,9 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { SideBar, Navbar } from "./components";
+import { SideBar, Navbar,Students,Authorization } from "./components";
 import { Routes, Route } from "react-router-dom";
-import { CreateCourse, Course, Courses, CourseEdit, AddMentor } from "./pages";
+import { CreateCourse, Course, Courses, CourseEdit, AddMentor,Main,Mentors,EditMentor } from "./pages";
 import { Context } from "./context";
-import Students from "./components/students";
-import Main from "./pages/main";
-import Mentors from "./pages/mentors";
-import EditMentor from "./pages/edit-mentor";
-import Authorization from "./components/authorization";
 
 function App() {
   const [courses, setCourses] = useState([]);
@@ -31,17 +26,17 @@ function App() {
   useEffect(() => {
     fetch("http://localhost:3001/courses")
       .then((res) => res.json())
-      .then((data) => {
+      .then(({data}) => {
         setCourses(data);
         localStorage.setItem("courses", JSON.stringify(data));
       });
     fetch("http://localhost:3001/users")
       .then((res) => res.json())
-      .then((data) => localStorage.setItem("users", JSON.stringify(data)));
+      .then(({data}) => localStorage.setItem("users", JSON.stringify(data)));
 
     fetch("http://localhost:3001/mentors")
       .then((res) => res.json())
-      .then((data) => {
+      .then(({data}) => {
         setMentors(data), localStorage.setItem("mentors", JSON.stringify(data));
       });
   }, []);

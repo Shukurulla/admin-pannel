@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 const Main = () => {
   const { courses, mentors } = useContext(Context);
+  console.log(courses);
   const students = JSON.parse(localStorage.getItem("users"));
   return (
     <div className="container">
