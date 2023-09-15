@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../context";
+import { useSelector } from "react-redux";
 
 const EditMentor = () => {
   const { id } = useParams();
-  const mentors = JSON.parse(localStorage.getItem("mentors"));
+  const { mentors } = useSelector((state) => state.mentor);
   const mentor = mentors.filter((c) => c._id === id);
   console.log(mentor);
   const [name, setName] = useState(mentor[0].name);
@@ -19,16 +20,7 @@ const EditMentor = () => {
   const female =
     "https://img.freepik.com/premium-psd/3d-render-cartoon-avatar-isolated_570939-48.jpg?w=1800";
 
-  const { setMentors, setSelectItem } = useContext(Context);
   const navigate = useNavigate("");
-  useEffect(() => {
-    setSelectItem(5);
-    fetch("http://localhost:3001/mentors")
-      .then((res) => res.json())
-      .then(({data}) => {
-        setMentors(data), localStorage.setItem("mentors", JSON.stringify(data));
-      });
-  }, []);
 
   const formData = (e) => {
     e.preventDefault();

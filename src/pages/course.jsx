@@ -1,10 +1,9 @@
 import { useParams } from "react-router-dom";
-import { useContext } from "react";
-import { Context } from "../context";
+import { useSelector } from "react-redux";
 const Course = () => {
-  const { courses } = useContext(Context);
+  const { courses } = useSelector((state) => state.CourseReducer);
   const { id } = useParams();
-  const course = courses?.filter((c) => c._id == id)[0];
+  const course = courses.filter((c) => c._id == id);
   console.log(course);
   return course === undefined ? (
     <p>Loading</p>

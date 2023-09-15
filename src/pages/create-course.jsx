@@ -1,7 +1,6 @@
 import { Input } from "../ui";
 import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Context } from "../context";
 
 const CreateCourse = () => {
   const [courseName, setCourseName] = useState("");
@@ -14,12 +13,6 @@ const CreateCourse = () => {
   const [price, setPrice] = useState("");
 
   const navigate = useNavigate();
-
-  const { setSelectItem } = useContext(Context);
-
-  useEffect(() => {
-    setSelectItem(2);
-  }, []);
 
   const formSubmit = (e) => {
     e.preventDefault();

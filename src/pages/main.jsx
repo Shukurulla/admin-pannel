@@ -1,11 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../context";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Main = () => {
-  const { courses, mentors } = useContext(Context);
-  console.log(courses);
-  const students = JSON.parse(localStorage.getItem("users"));
+  const { courses } = useSelector((state) => state.course);
+  const { mentors } = useSelector((state) => state.mentor);
+  const { students } = useSelector((state) => state.student);
   return (
     <div className="container">
       <div className="row">

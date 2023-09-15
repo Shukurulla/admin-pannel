@@ -1,14 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { sideNavigations } from "../constants";
 import { useState, useContext } from "react";
-import { Context } from "../context";
 const SideBar = () => {
   const [showSide, setShowSide] = useState(true);
-  const { selectItem } = useContext(Context);
+  const navigate = useNavigate();
 
   const logOut = async () => {
-     localStorage.removeItem("user");
+    localStorage.removeItem("Auth");
     window.location.reload();
+    navigate("/authorization");
   };
 
   return (
@@ -29,9 +29,7 @@ const SideBar = () => {
           {sideNavigations.map((item, idx) => {
             return (
               <li
-                className={`d-flex gap-2 align-items-center ${
-                  selectItem == idx && "selected"
-                }`}
+                className={`d-flex gap-2 align-items-center`}
                 key={item.label}
               >
                 <Link to={item.path}>

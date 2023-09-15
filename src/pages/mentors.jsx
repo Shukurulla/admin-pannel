@@ -1,28 +1,10 @@
 import React, { useContext, useEffect } from "react";
-import { Context } from "../context";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Mentors = () => {
-  const { setMentors, setSelectItem } = useContext(Context);
-  useEffect(() => {
-    setSelectItem(5);
-    fetch("http://localhost:3001/mentors")
-      .then((res) => res.json())
-      .then(({data}) => {
-        setMentors(data), localStorage.setItem("mentors", JSON.stringify(data));
-      });
-  }, []);
-  const mentors = JSON.parse(localStorage.getItem("mentors"));
+  const { mentors } = useSelector((state) => state.mentor);
   console.log(mentors);
-
-  const onDelete = (id) => {
-    console.log(id);
-    fetch(`http://localhost:3001/delete-mentor/${id}`, {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then(({data}) => setMentors(data));
-  };
 
   return (
     <div className="container">

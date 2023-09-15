@@ -1,25 +1,26 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Authorization = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState(false);
-
   const navigate = useNavigate();
 
-  const auth = (e) => {
+  const auth = async (e) => {
     e.preventDefault();
-    if (name !== "itcenter2021" && password !== "ITCENTER@)@!") {
-      setErr(!err);
-    } else {
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ user: { name, password } })
-      );
+    const { data } = await axios.post("http://localhost:3001/authorization", {
+      name,
+      password,
+    });
+    if (data.msg) {
+      localStorage.setItem("Auth", true);
       navigate("/");
-      window.location.reload();
+    } else {
+      localStorage.setItem("Auth", false);
     }
+    window.location.reload();
   };
 
   return (

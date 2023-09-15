@@ -1,19 +1,10 @@
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
 import { CourseCard } from "../components";
-import { Context } from "../context";
+import { useSelector } from "react-redux";
 const Courses = () => {
-  const { courses, setCourses, setSelectItem } = useContext(Context);
-
-  useEffect(() => {
-    setSelectItem(1);
-    fetch("http://localhost:3001/courses")
-      .then((res) => res.json())
-      .then(({data}) => {
-        setCourses(data);
-      });
-    console.log(courses);
-
-  }, []);
+  useEffect(() => {}, []);
+  const { courses } = useSelector((state) => state.CourseReducer);
+  console.log(courses);
   return (
     <div className="p-3">
       <div className="container">

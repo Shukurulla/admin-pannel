@@ -1,14 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import male from "../../public/male.jpg";
-import female from "../../public/female.jpg";
 import { useNavigate } from "react-router-dom";
-import { Context } from "../context";
 
 const AddMentor = () => {
-  const { setSelectItem } = useContext(Context);
-  useEffect(() => {
-    setSelectItem(4);
-  }, []);
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [course, setCourse] = useState("");

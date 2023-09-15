@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { Context } from "../context";
+import { useSelector } from "react-redux";
 
 const CourseCard = ({ image, brief_info, name, id }) => {
-  const { setCourses, courses } = useContext(Context);
   const onDelete = () => {
     fetch(`http://localhost:3001/delete-course/${id}`, {
       method: "POST",

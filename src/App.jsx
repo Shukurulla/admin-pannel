@@ -1,74 +1,108 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { SideBar, Navbar,Students,Authorization } from "./components";
-import { Routes, Route } from "react-router-dom";
-import { CreateCourse, Course, Courses, CourseEdit, AddMentor,Main,Mentors,EditMentor } from "./pages";
-import { Context } from "./context";
+import { SideBar, Navbar, Students, Authorization } from "./components";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import {
+  CreateCourse,
+  Course,
+  Courses,
+  CourseEdit,
+  AddMentor,
+  Main,
+  Mentors,
+  EditMentor,
+} from "./pages";
+import CourseService from "./service/course";
+import { useDispatch } from "react-redux";
+import {
+  courseLoadingFailure,
+  courseLoadingStart,
+  courseLoadingSuccesss,
+} from "./slice/course";
+import {
+  mentorLoadingFailure,
+  mentorLoadingStart,
+  mentorLoadingSuccess,
+} from "./slice/mentor";
+import MentorService from "./service/mentor";
+import {
+  studentsLoadingFailure,
+  studentsLoadingStart,
+  studentsLoadingSuccess,
+} from "./slice/students";
+import StudentService from "./service/students";
 
 function App() {
-  const [courses, setCourses] = useState([]);
-  const [students, setStudents] = useState([]);
-  const [selectItem, setSelectItem] = useState(0);
-  const [mentors, setMentors] = useState([]);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const auth = JSON.parse(localStorage.getItem("user"));
+  const auth = JSON.parse(localStorage.getItem("Auth"));
 
-  const value = {
-    courses,
-    setCourses,
-    students,
-    setStudents,
-    selectItem,
-    setSelectItem,
-    mentors,
-    setMentors,
+  const getCourse = async () => {
+    dispatch(courseLoadingStart());
+    try {
+      const data = await CourseService.getCourses();
+      dispatch(courseLoadingSuccesss(data));
+      console.log(data);
+    } catch (error) {
+      dispatch(courseLoadingFailure());
+    }
   };
-  useEffect(() => {
-    fetch("http://localhost:3001/courses")
-      .then((res) => res.json())
-      .then(({data}) => {
-        setCourses(data);
-        localStorage.setItem("courses", JSON.stringify(data));
-      });
-    fetch("http://localhost:3001/users")
-      .then((res) => res.json())
-      .then(({data}) => localStorage.setItem("users", JSON.stringify(data)));
+  const getMentor = async () => {
+    dispatch(mentorLoadingStart());
+    try {
+      const { data } = await MentorService.getMentors();
+      dispatch(mentorLoadingSuccess(data));
+      console.log(data);
+    } catch (error) {
+      dispatch(mentorLoadingFailure());
+    }
+  };
+  const getStudents = async () => {
+    dispatch(studentsLoadingStart());
+    try {
+      const { data } = await StudentService.getStudents();
+      dispatch(studentsLoadingSuccess(data));
+      console.log(data);
+    } catch (error) {
+      dispatch(studentsLoadingFailure());
+    }
+  };
 
-    fetch("http://localhost:3001/mentors")
-      .then((res) => res.json())
-      .then(({data}) => {
-        setMentors(data), localStorage.setItem("mentors", JSON.stringify(data));
-      });
+  useEffect(() => {
+    !auth ? navigate("/authorization") : null;
+
+    getCourse();
+    getMentor();
+    getStudents();
   }, []);
 
   return !auth ? (
     <Authorization />
   ) : (
     <>
-      <Context.Provider value={value}>
-        <div className="d-flex">
-          <div>
-            <SideBar />
-          </div>
-          <div className="w-100">
-            <Navbar />
-            <div className="scroll-bar">
-              <Routes>
-                <Route path="/" element={<Main />} />
-                <Route path="/auth" element={<Authorization />} />
-                <Route path="/courses-add" element={<CreateCourse />} />
-                <Route path="/courses" element={<Courses />} />
-                <Route path="/course/:id" element={<Course />} />
-                <Route path="/edit-course/:id" element={<CourseEdit />} />
-                <Route path="/students" element={<Students />} />
-                <Route path="/add-mentor" element={<AddMentor />} />
-                <Route path="/mentors" element={<Mentors />} />
-                <Route path="/edit-mentor/:id" element={<EditMentor />} />
-              </Routes>
-            </div>
+      <div className="d-flex">
+        <div>
+          <SideBar />
+        </div>
+        <div className="w-100">
+          <Navbar />
+          <div className="scroll-bar">
+            <Routes>
+              <Route path="/" element={<Main />} />
+              <Route path="/auth" element={<Authorization />} />
+              <Route path="/courses-add" element={<CreateCourse />} />
+              <Route path="/courses" element={<Courses />} />
+              <Route path="/course/:id" element={<Course />} />
+              <Route path="/edit-course/:id" element={<CourseEdit />} />
+              <Route path="/students" element={<Students />} />
+              <Route path="/add-mentor" element={<AddMentor />} />
+              <Route path="/mentors" element={<Mentors />} />
+              <Route path="/edit-mentor/:id" element={<EditMentor />} />
+            </Routes>
           </div>
         </div>
-      </Context.Provider>
+      </div>
     </>
   );
 }

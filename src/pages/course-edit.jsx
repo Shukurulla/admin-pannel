@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useContext, useState } from "react";
-import { Context } from "../context";
 import { Input } from "../ui";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const CourseEdit = () => {
   const { id } = useParams();
 
-  const { courses } = useContext(Context);
+  const { courses } = useSelector((state) => state.course);
   const course = courses.filter((c) => c._id == id);
   const [courseName, setCourseName] = useState(course[0].name);
   const [mentor, setMentor] = useState(course[0].mentor);
