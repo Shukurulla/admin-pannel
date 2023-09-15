@@ -1,12 +1,11 @@
 import React, { useContext, useEffect } from "react";
-import { Context } from "../context";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Main = () => {
-  const { courses } = useSelector((state) => state.course);
-  const { mentors } = useSelector((state) => state.mentor);
-  const { students } = useSelector((state) => state.student);
+  const { courses } = useSelector((state) => state.CourseReducer);
+  const { mentors } = useSelector((state) => state.MentorReducer);
+  const { students } = useSelector((state) => state.StudentReducer);
   return (
     <div className="container">
       <div className="row">

@@ -17,7 +17,7 @@ import { useDispatch } from "react-redux";
 import {
   courseLoadingFailure,
   courseLoadingStart,
-  courseLoadingSuccesss,
+  courseLoadingSuccess,
 } from "./slice/course";
 import {
   mentorLoadingFailure,
@@ -41,9 +41,8 @@ function App() {
   const getCourse = async () => {
     dispatch(courseLoadingStart());
     try {
-      const data = await CourseService.getCourses();
-      dispatch(courseLoadingSuccesss(data));
-      console.log(data);
+      const { data } = await CourseService.getCourses();
+      dispatch(courseLoadingSuccess(data));
     } catch (error) {
       dispatch(courseLoadingFailure());
     }
@@ -51,7 +50,7 @@ function App() {
   const getMentor = async () => {
     dispatch(mentorLoadingStart());
     try {
-      const { data } = await MentorService.getMentors();
+      const data = await MentorService.getMentors();
       dispatch(mentorLoadingSuccess(data));
       console.log(data);
     } catch (error) {
@@ -63,7 +62,6 @@ function App() {
     try {
       const { data } = await StudentService.getStudents();
       dispatch(studentsLoadingSuccess(data));
-      console.log(data);
     } catch (error) {
       dispatch(studentsLoadingFailure());
     }

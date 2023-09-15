@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Mentors = () => {
-  const { mentors } = useSelector((state) => state.mentor);
+  const { mentors } = useSelector((state) => state.MentorReducer);
   console.log(mentors);
 
   return (

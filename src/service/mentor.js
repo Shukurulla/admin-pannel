@@ -2,8 +2,9 @@ import axios from "./api";
 
 const MentorService = {
   async getMentors() {
-    const { data } = axios.get("/mentors");
-    return data;
+    const { data } = await axios.get("/mentors");
+    console.log(data);
+    return data.data;
   },
 };
 

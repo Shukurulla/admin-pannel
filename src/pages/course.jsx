@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 const Course = () => {
   const { courses } = useSelector((state) => state.CourseReducer);
   const { id } = useParams();
-  const course = courses.filter((c) => c._id == id);
+  const course = courses.filter((c) => c._id == id)[0];
   console.log(course);
   return course === undefined ? (
     <p>Loading</p>

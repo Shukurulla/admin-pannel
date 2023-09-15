@@ -1,8 +1,26 @@
 import { useEffect } from "react";
 import { CourseCard } from "../components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  courseLoadingFailure,
+  courseLoadingStart,
+  courseLoadingSuccess,
+} from "../slice/course";
 const Courses = () => {
-  useEffect(() => {}, []);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const getCourse = async () => {
+      dispatch(courseLoadingStart());
+      try {
+        const { data } = await CourseService.getCourses();
+        dispatch(courseLoadingSuccess(data));
+        console.log(data);
+      } catch (error) {
+        dispatch(courseLoadingFailure());
+      }
+    };
+    getCourse();
+  }, []);
   const { courses } = useSelector((state) => state.CourseReducer);
   console.log(courses);
   return (

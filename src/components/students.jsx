@@ -4,19 +4,14 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Context } from "../context";
 import UserRow from "./user-row";
+import { useSelector } from "react-redux";
 
 const Students = () => {
-  const { setSelectItem } = useContext(Context)
-  useEffect(() => {
-    setSelectItem(3)
-  }, [])
-  const users = JSON.parse(localStorage.getItem("users"));
-  console.log(users);
-
+  const { students } = useSelector((state) => state.StudentReducer);
 
   return (
     <div className="container">
-      <table className="user-table" >
+      <table className="user-table">
         <thead>
           <tr>
             <th>No</th>
@@ -29,7 +24,7 @@ const Students = () => {
           </tr>
         </thead>
         <tbody className="students-box">
-          {users.map((item, idx) => (
+          {students.map((item, idx) => (
             <UserRow key={idx} item={item} idx={idx} />
           ))}
         </tbody>

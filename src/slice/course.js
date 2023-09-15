@@ -23,6 +23,6 @@ export const courseSlice = createSlice({
 export const {
   courseLoadingFailure,
   courseLoadingStart,
-  courseLoadingSuccesss,
+  courseLoadingSuccess,
 } = courseSlice.actions;
 export default courseSlice.reducer;

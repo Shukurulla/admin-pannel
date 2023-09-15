@@ -1,6 +1,9 @@
 import { Input } from "../ui";
 import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import CourseService from "../service/course";
+import { useDispatch } from "react-redux";
+import { courseLoadingStart, courseLoadingSuccess } from "../slice/course";
 
 const CreateCourse = () => {
   const [courseName, setCourseName] = useState("");
@@ -13,11 +16,12 @@ const CreateCourse = () => {
   const [price, setPrice] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const formSubmit = (e) => {
     e.preventDefault();
     const slug = courseName.replace(" ", "").toLocaleLowerCase();
-
+    dispatch(courseLoadingStart());
     const course = {
       name: courseName,
       mentor,
@@ -29,26 +33,13 @@ const CreateCourse = () => {
       courseImage: image,
       slug,
     };
+    try {
+      CourseService.addCourse({ course });
+    } catch (error) {
+      console.log(error);
+    }
 
-    navigate("/courses");
-    fetch("http://localhost:3001/create-course", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(course),
-    })
-      .then((res) => {
-        res.json();
-      })
-      .then((data) => {
-        navigate("/");
-        console.log(data);
-      })
-      .catch((err) => {
-        console.log(err);
-        navigate("/courses-add");
-      });
+    // navigate("/courses");
   };
 
   return (

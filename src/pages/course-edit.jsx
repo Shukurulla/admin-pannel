@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const CourseEdit = () => {
   const { id } = useParams();
 
-  const { courses } = useSelector((state) => state.course);
+  const { courses } = useSelector((state) => state.CourseReducer);
   const course = courses.filter((c) => c._id == id);
   const [courseName, setCourseName] = useState(course[0].name);
   const [mentor, setMentor] = useState(course[0].mentor);
@@ -34,14 +34,6 @@ const CourseEdit = () => {
 
   const formEdit = (e) => {
     e.preventDefault();
-    fetch(`http://localhost:3001/edit-course/${id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(courseVal),
-    });
-    navigate("/courses");
   };
 
   return (
