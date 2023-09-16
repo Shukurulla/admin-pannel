@@ -22,7 +22,6 @@ const Courses = () => {
     getCourse();
   }, []);
   const { courses } = useSelector((state) => state.CourseReducer);
-  console.log(courses);
   return (
     <div className="p-3">
       <div className="container">

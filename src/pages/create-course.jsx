@@ -18,7 +18,7 @@ const CreateCourse = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const formSubmit = (e) => {
+  const formSubmit = async(e) => {
     e.preventDefault();
     const slug = courseName.replace(" ", "").toLocaleLowerCase();
     dispatch(courseLoadingStart());
@@ -34,7 +34,8 @@ const CreateCourse = () => {
       slug,
     };
     try {
-      CourseService.addCourse({ course });
+      const data = await CourseService.addCourse(course);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }

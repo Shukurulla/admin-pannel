@@ -1,5 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import MentorService from "../service/mentor";
+import { mentorLoadingFailure, mentorLoadingStart, mentorLoadingSuccess } from "../slice/mentor";
 
 const AddMentor = () => {
 
@@ -12,30 +15,37 @@ const AddMentor = () => {
   const [gender, setGender] = useState("erkak");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const male =
     "https://img.freepik.com/premium-psd/3d-render-cartoon-avatar-isolated_570939-66.jpg";
   const female =
     "https://img.freepik.com/premium-psd/3d-render-cartoon-avatar-isolated_570939-48.jpg?w=1800";
 
-  const formData = (e) => {
+    const mentor = {
+      name,
+      phoneNumber: phone,
+      image: gender == "erkak" ? male : female,
+      telegramUrl,
+      instagramUrl,
+      course,
+      gender,
+    }
+
+  const formData = async(e) => {
     e.preventDefault();
-    fetch("http://localhost:3001/add-mentor", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        phoneNumber: phone,
-        image: gender == "erkak" ? male : female,
-        telegramUrl,
-        instagramUrl,
-        course,
-        gender,
-      }),
-    });
+    console.log('dasda');
+    dispatch(mentorLoadingStart())
+    try {
+      const data = await MentorService.addMentor(mentor)
+      console.log(data);
+     dispatch(mentorLoadingSuccess(data))
+     
+    } catch (error) {
+      dispatch(mentorLoadingFailure())
+    }
     navigate("/mentors");
+      
   };
 
   return (

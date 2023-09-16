@@ -7,7 +7,7 @@ import UserRow from "./user-row";
 import { useSelector } from "react-redux";
 
 const Students = () => {
-  const { students } = useSelector((state) => state.StudentReducer);
+  const { students,isLoading } = useSelector((state) => state.StudentReducer);
 
   return (
     <div className="container">
@@ -24,6 +24,7 @@ const Students = () => {
           </tr>
         </thead>
         <tbody className="students-box">
+          
           {students.map((item, idx) => (
             <UserRow key={idx} item={item} idx={idx} />
           ))}

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isLoading: false,
   courses: [],
+  course:[]
 };
 
 export const courseSlice = createSlice({
@@ -18,11 +19,16 @@ export const courseSlice = createSlice({
     courseLoadingFailure: (state) => {
       state.isLoading = false;
     },
+    courseIdLoading: (state,action) => {
+      state.isLoading = false
+      state.course = action.payload
+    }
   },
 });
 export const {
   courseLoadingFailure,
   courseLoadingStart,
   courseLoadingSuccess,
+  courseIdLoading
 } = courseSlice.actions;
 export default courseSlice.reducer;

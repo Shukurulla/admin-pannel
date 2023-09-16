@@ -10,7 +10,7 @@ const Authorization = () => {
 
   const auth = async (e) => {
     e.preventDefault();
-    const { data } = await axios.post("http://localhost:3001/authorization", {
+    const { data } = await axios.post("http://localhost:2000/authorization", {
       name,
       password,
     });

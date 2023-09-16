@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../context";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import MentorService from "../service/mentor";
+import { mentorLoadingFailure, mentorLoadingStart, mentorLoadingSuccess } from "../slice/mentor";
 
 const EditMentor = () => {
   const { id } = useParams();
-  const { mentors } = useSelector((state) => state.mentor);
+  const { mentors } = useSelector((state) => state.MentorReducer);
   const mentor = mentors.filter((c) => c._id === id);
-  console.log(mentor);
   const [name, setName] = useState(mentor[0].name);
   const [phone, setPhone] = useState(mentor[0].phoneNumber);
   const [course, setCourse] = useState(mentor[0].course);
@@ -20,25 +21,30 @@ const EditMentor = () => {
   const female =
     "https://img.freepik.com/premium-psd/3d-render-cartoon-avatar-isolated_570939-48.jpg?w=1800";
 
-  const navigate = useNavigate("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
 
-  const formData = (e) => {
+  const mentorVal = {
+    name,
+    phoneNumber: phone,
+    image: gender == "erkak" ? male : female,
+    telegramUrl,
+    instagramUrl,
+    course,
+  }
+
+  const formData = async(e) => {
     e.preventDefault();
-    fetch(`http://localhost:3001/edit-mentor/${id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        phoneNumber: phone,
-        image: gender == "erkak" ? male : female,
-        telegramUrl,
-        instagramUrl,
-        course,
-      }),
-    });
-    navigate("/mentors");
+    dispatch(mentorLoadingStart())
+    try {
+      const data = await MentorService.editMentor(id, mentorVal)
+      console.log(data);
+      dispatch(mentorLoadingSuccess(data))
+      navigate("/mentors");
+    } catch (error) {
+      dispatch(mentorLoadingFailure())
+    }
+
   };
 
   return (

@@ -2,7 +2,10 @@ import { useParams } from "react-router-dom";
 import { useContext, useState } from "react";
 import { Input } from "../ui";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import CourseService from "../service/course";
+import { courseIdLoading, courseLoadingStart, courseLoadingSuccess } from "../slice/course";
+import { useEffect } from "react";
 
 const CourseEdit = () => {
   const { id } = useParams();
@@ -20,6 +23,12 @@ const CourseEdit = () => {
   const navigate = useNavigate();
   const slug = courseName.replace(" ", "").toLocaleLowerCase();
 
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(courseIdLoading(course[0]))
+  }, [])
+
   const courseVal = {
     name: courseName,
     mentor,
@@ -32,8 +41,16 @@ const CourseEdit = () => {
     slug,
   };
 
-  const formEdit = (e) => {
+  const formEdit = async(e) => {
     e.preventDefault();
+    dispatch(courseLoadingStart())
+    try {
+      const {data} = await CourseService.editCourse(id,courseVal)
+      dispatch(courseLoadingSuccess(data))
+      navigate('/courses')
+    } catch (error) {
+      
+    }
   };
 
   return (

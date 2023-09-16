@@ -13,7 +13,7 @@ import {
   EditMentor,
 } from "./pages";
 import CourseService from "./service/course";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   courseLoadingFailure,
   courseLoadingStart,
@@ -67,9 +67,9 @@ function App() {
     }
   };
 
+  const {course } = useSelector(state => state.StudentReducer)
   useEffect(() => {
     !auth ? navigate("/authorization") : null;
-
     getCourse();
     getMentor();
     getStudents();

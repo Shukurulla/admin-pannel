@@ -1,22 +1,21 @@
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { Context } from "../context";
-import { useSelector } from "react-redux";
+import CourseService from "../service/course";
+import { courseIdLoading, courseLoadingStart, courseLoadingSuccess } from "../slice/course";
 
 const CourseCard = ({ image, brief_info, name, id }) => {
-  const onDelete = () => {
-    fetch(`http://localhost:3001/delete-course/${id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setCourses(data);
-      });
+  const dispatch = useDispatch()
+  const onDelete = async () => {
+    dispatch(courseLoadingStart())
+    try {
+      const {data} = await CourseService.deleteCourse(id)
+      console.log(data);
+      dispatch(courseLoadingSuccess(data))
+    } catch (error) {
+      
+    }
   };
+  
 
   return (
     <div className="card shadow-sm text-center h-100">
