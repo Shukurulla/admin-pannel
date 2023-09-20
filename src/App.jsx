@@ -67,7 +67,7 @@ function App() {
     }
   };
 
-  const {course } = useSelector(state => state.StudentReducer)
+  const { course } = useSelector((state) => state.StudentReducer);
   useEffect(() => {
     !auth ? navigate("/authorization") : null;
     getCourse();

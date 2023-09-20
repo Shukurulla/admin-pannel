@@ -3,7 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../context";
 import { useDispatch, useSelector } from "react-redux";
 import MentorService from "../service/mentor";
-import { mentorLoadingFailure, mentorLoadingStart, mentorLoadingSuccess } from "../slice/mentor";
+import FileBase64 from "react-file-base64";
+import {
+  mentorLoadingFailure,
+  mentorLoadingStart,
+  mentorLoadingSuccess,
+} from "../slice/mentor";
 
 const EditMentor = () => {
   const { id } = useParams();
@@ -14,37 +19,31 @@ const EditMentor = () => {
   const [course, setCourse] = useState(mentor[0].course);
   const [telegramUrl, setTelegramUrl] = useState(mentor[0].telegramUrl);
   const [instagramUrl, setInstagramUrl] = useState(mentor[0].instagramUrl);
-  const [gender, setGender] = useState(mentor[0].gender);
-
-  const male =
-    "https://img.freepik.com/premium-psd/3d-render-cartoon-avatar-isolated_570939-66.jpg";
-  const female =
-    "https://img.freepik.com/premium-psd/3d-render-cartoon-avatar-isolated_570939-48.jpg?w=1800";
+  const [image, setImage] = useState("");
 
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const mentorVal = {
     name,
     phoneNumber: phone,
-    image: gender == "erkak" ? male : female,
+    image,
     telegramUrl,
     instagramUrl,
     course,
-  }
+  };
 
-  const formData = async(e) => {
+  const formData = async (e) => {
     e.preventDefault();
-    dispatch(mentorLoadingStart())
+    dispatch(mentorLoadingStart());
     try {
-      const data = await MentorService.editMentor(id, mentorVal)
+      const data = await MentorService.editMentor(id, mentorVal);
       console.log(data);
-      dispatch(mentorLoadingSuccess(data))
+      dispatch(mentorLoadingSuccess(data));
       navigate("/mentors");
     } catch (error) {
-      dispatch(mentorLoadingFailure())
+      dispatch(mentorLoadingFailure());
     }
-
   };
 
   return (
@@ -97,16 +96,11 @@ const EditMentor = () => {
               onChange={(e) => setInstagramUrl(e.target.value)}
             />
           </div>
-          <div className="col-lg-6 col-md-6 col-sm-12">
-            <select
-              className="form-control"
-              value={gender}
-              onChange={(e) => (setGender(e.target.value), console.log(gender))}
-            >
-              <option value="erkak">Erkak</option>
-              <option value="ayol">Ayol</option>
-            </select>
-          </div>
+          <FileBase64
+            multiple={false}
+            onDone={({ base64 }) => setImage(base64)}
+          />
+          <label htmlFor="id">File</label>
           <div>
             <button className="btn btn-primary" type="submit">
               Edit Mentor

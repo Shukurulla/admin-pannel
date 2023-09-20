@@ -2,50 +2,45 @@ import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import MentorService from "../service/mentor";
-import { mentorLoadingFailure, mentorLoadingStart, mentorLoadingSuccess } from "../slice/mentor";
+import {
+  mentorLoadingFailure,
+  mentorLoadingStart,
+  mentorLoadingSuccess,
+} from "../slice/mentor";
+import FileBase64 from "react-file-base64";
 
 const AddMentor = () => {
-
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [course, setCourse] = useState("");
   const [telegramUrl, setTelegramUrl] = useState();
   const [instagramUrl, setInstagramUrl] = useState();
   const [image, setImage] = useState("");
-  const [gender, setGender] = useState("erkak");
 
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const male =
-    "https://img.freepik.com/premium-psd/3d-render-cartoon-avatar-isolated_570939-66.jpg";
-  const female =
-    "https://img.freepik.com/premium-psd/3d-render-cartoon-avatar-isolated_570939-48.jpg?w=1800";
+  const mentor = {
+    name,
+    phoneNumber: phone,
+    image: image,
+    telegramUrl,
+    instagramUrl,
+    course,
+  };
 
-    const mentor = {
-      name,
-      phoneNumber: phone,
-      image: gender == "erkak" ? male : female,
-      telegramUrl,
-      instagramUrl,
-      course,
-      gender,
-    }
-
-  const formData = async(e) => {
+  const formData = async (e) => {
     e.preventDefault();
-    console.log('dasda');
-    dispatch(mentorLoadingStart())
+    console.log("dasda");
+    dispatch(mentorLoadingStart());
     try {
-      const data = await MentorService.addMentor(mentor)
+      const data = await MentorService.addMentor(mentor);
       console.log(data);
-     dispatch(mentorLoadingSuccess(data))
-     
+      dispatch(mentorLoadingSuccess(data));
     } catch (error) {
-      dispatch(mentorLoadingFailure())
+      dispatch(mentorLoadingFailure());
     }
     navigate("/mentors");
-      
   };
 
   return (
@@ -98,16 +93,10 @@ const AddMentor = () => {
               onChange={(e) => setInstagramUrl(e.target.value)}
             />
           </div>
-          <div className="col-lg-6 col-md-6 col-sm-12">
-            <select
-              className="form-control"
-              value={image}
-              onChange={(e) => setGender(e.target.value)}
-            >
-              <option value="erkak">Erkak</option>
-              <option value="ayol">Ayol</option>
-            </select>
-          </div>
+          <FileBase64
+            multiple={false}
+            onDone={({ base64 }) => setImage(base64)}
+          />
           <div>
             <button className="btn btn-primary" type="submit">
               Add Mentor
