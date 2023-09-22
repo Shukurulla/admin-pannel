@@ -2,21 +2,30 @@ import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import MentorService from "../service/mentor";
-import { mentorLoadingFailure, mentorLoadingStart, mentorLoadingSuccess } from "../slice/mentor";
+import {
+  mentorLoadingFailure,
+  mentorLoadingStart,
+  mentorLoadingSuccess,
+} from "../slice/mentor";
+import { uiLoadingSuccess } from "../slice/ui";
 
 const Mentors = () => {
   const { mentors } = useSelector((state) => state.MentorReducer);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const onDelete = async id => {
-    dispatch(mentorLoadingStart())
+  useEffect(() => {
+    dispatch(uiLoadingSuccess("mentors"));
+  }, []);
+
+  const onDelete = async (id) => {
+    dispatch(mentorLoadingStart());
     try {
-      const data = await MentorService.deleteMentor(id)
-      dispatch(mentorLoadingSuccess(data))
+      const data = await MentorService.deleteMentor(id);
+      dispatch(mentorLoadingSuccess(data));
     } catch (error) {
-      dispatch(mentorLoadingFailure())
+      dispatch(mentorLoadingFailure());
     }
-  }
+  };
 
   return (
     <div className="container">

@@ -6,9 +6,12 @@ import {
   courseLoadingStart,
   courseLoadingSuccess,
 } from "../slice/course";
+import { uiLoadingSuccess } from "../slice/ui";
 const Courses = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
+    dispatch(uiLoadingSuccess("courses"));
     const getCourse = async () => {
       dispatch(courseLoadingStart());
       try {

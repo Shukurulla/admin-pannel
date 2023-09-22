@@ -9,6 +9,7 @@ import {
   mentorLoadingStart,
   mentorLoadingSuccess,
 } from "../slice/mentor";
+import { uiLoadingSuccess } from "../slice/ui";
 
 const EditMentor = () => {
   const { id } = useParams();
@@ -23,6 +24,10 @@ const EditMentor = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(uiLoadingSuccess("mentor"));
+  }, []);
 
   const mentorVal = {
     name,

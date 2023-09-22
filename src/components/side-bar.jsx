@@ -1,9 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { sideNavigations } from "../constants";
 import { useState, useContext } from "react";
+import { useSelector } from "react-redux";
 const SideBar = () => {
   const [showSide, setShowSide] = useState(true);
   const navigate = useNavigate();
+
+  const { active } = useSelector((state) => state.ui);
 
   const logOut = async () => {
     localStorage.removeItem("Auth");
@@ -29,7 +32,9 @@ const SideBar = () => {
           {sideNavigations.map((item, idx) => {
             return (
               <li
-                className={`d-flex gap-2 align-items-center`}
+                className={`d-flex gap-2 align-items-center ${
+                  active == item.active && "selected"
+                }`}
                 key={item.label}
               >
                 <Link to={item.path}>

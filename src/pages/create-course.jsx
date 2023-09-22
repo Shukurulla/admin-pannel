@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import CourseService from "../service/course";
 import { useDispatch } from "react-redux";
 import { courseLoadingStart, courseLoadingSuccess } from "../slice/course";
+import { uiLoadingSuccess } from "../slice/ui";
 
 const CreateCourse = () => {
   const [courseName, setCourseName] = useState("");
@@ -18,7 +19,11 @@ const CreateCourse = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const formSubmit = async(e) => {
+  useEffect(() => {
+    dispatch(uiLoadingSuccess("add-courses"));
+  }, []);
+
+  const formSubmit = async (e) => {
     e.preventDefault();
     const slug = courseName.replace(" ", "").toLocaleLowerCase();
     dispatch(courseLoadingStart());

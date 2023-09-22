@@ -4,10 +4,17 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Context } from "../context";
 import UserRow from "./user-row";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { uiLoadingSuccess } from "../slice/ui";
 
 const Students = () => {
-  const { students,isLoading } = useSelector((state) => state.StudentReducer);
+  const { students, isLoading } = useSelector((state) => state.StudentReducer);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(uiLoadingSuccess("students"));
+  }, []);
 
   return (
     <div className="container">
@@ -24,7 +31,6 @@ const Students = () => {
           </tr>
         </thead>
         <tbody className="students-box">
-          
           {students.map((item, idx) => (
             <UserRow key={idx} item={item} idx={idx} />
           ))}

@@ -1,11 +1,19 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { uiLoadingSuccess } from "../slice/ui";
 
 const Main = () => {
   const { courses } = useSelector((state) => state.CourseReducer);
   const { mentors } = useSelector((state) => state.MentorReducer);
   const { students } = useSelector((state) => state.StudentReducer);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(uiLoadingSuccess("dashboard"));
+  }, []);
+
   return (
     <div className="container">
       <div className="row">

@@ -10,10 +10,13 @@ const Authorization = () => {
 
   const auth = async (e) => {
     e.preventDefault();
-    const { data } = await axios.post("http://localhost:2000/authorization", {
-      name,
-      password,
-    });
+    const { data } = await axios.post(
+      "https://it-center-server.onrender.com/authorization",
+      {
+        name,
+        password,
+      }
+    );
     if (data.msg) {
       localStorage.setItem("Auth", true);
       navigate("/");

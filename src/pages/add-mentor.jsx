@@ -8,6 +8,7 @@ import {
   mentorLoadingSuccess,
 } from "../slice/mentor";
 import FileBase64 from "react-file-base64";
+import { uiLoadingSuccess } from "../slice/ui";
 
 const AddMentor = () => {
   const [name, setName] = useState("");
@@ -20,6 +21,9 @@ const AddMentor = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(uiLoadingSuccess("add-mentor"));
+  }, []);
   const mentor = {
     name,
     phoneNumber: phone,

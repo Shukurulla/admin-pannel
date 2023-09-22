@@ -1,10 +1,16 @@
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { uiLoadingSuccess } from "../slice/ui";
+import { useEffect } from "react";
 const Course = () => {
   const { courses } = useSelector((state) => state.CourseReducer);
   const { id } = useParams();
   const course = courses.filter((c) => c._id == id)[0];
-  console.log(course);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(uiLoadingSuccess("courses"));
+  }, []);
   return course === undefined ? (
     <p>Loading</p>
   ) : (
