@@ -31,6 +31,7 @@ import {
   studentsLoadingSuccess,
 } from "./slice/students";
 import StudentService from "./service/students";
+import PdfFile from "./pages/pdf-file";
 
 function App() {
   const navigate = useNavigate();
@@ -101,6 +102,7 @@ function App() {
           </div>
         </div>
       </div>
+      <PdfFile />
     </>
   );
 }

@@ -1,14 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Kadwa:wght@700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
-}
-
-body {
-  position: fixed;
-  width: 100%;
-  height: 100vh;
-  top: 0;
-  left: 0;
 }
 
 body a {
@@ -157,6 +151,104 @@ td {
 .info-box {
   cursor: pointer;
 }
-.pointer{
+.pointer {
   cursor: pointer;
+}
+.sertificat-page {
+  position: relative;
+  width: 100%;
+  background-image: url(../public/sertificat-bg.png);
+  background-size: cover;
+  height: 100vh;
+}
+.sertificat-page img {
+  width: 100px;
+}
+
+.sertificat-page .tobe {
+  position: absolute;
+  transform: rotate(180deg);
+  width: 70%;
+  z-index: -1;
+}
+.sertificat-page .tobe img {
+  width: 100%;
+}
+.sertificat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 85%;
+  margin: auto;
+  padding-top: 100px;
+}
+.sertificat-header img {
+  width: 250px;
+}
+.sertificat-info {
+  margin: auto;
+  text-align: center;
+  font-family: "Kadwa", serif;
+}
+
+.sertificat-info .sertificat-text-img {
+  width: 40%;
+  margin: auto;
+  padding: 20px 0;
+}
+.sertificat-info .sertificat-text-img img {
+  width: 100%;
+}
+.student-name {
+  width: 100%;
+}
+.student-name h1 {
+  font-size: 70px;
+  color: #6a6a6a;
+  border-bottom: 5px solid #4e4e4d;
+  width: 60%;
+  margin: auto;
+  text-transform: uppercase;
+  padding: 0;
+}
+.success-course-info {
+  width: 80%;
+  margin: auto;
+  margin-top: 20px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 30px;
+  color: #363636;
+  font-weight: 700;
+}
+
+.success-course-info .course-name,
+.duration {
+  color: #4e8d05;
+}
+.success-course-info .duration {
+  text-decoration: underline;
+  text-align: center;
+  margin-right: 10px;
+}
+.sertificat-footer {
+  width: 85%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+
+.sertificat-footer img {
+  width: 250px;
+}
+.footer-tobe {
+  position: absolute;
+  width: 70%;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+.footer-tobe img {
+  width: 100%;
 }
